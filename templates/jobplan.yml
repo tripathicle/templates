@@ -1,0 +1,27 @@
+parameters:
+  workingDir: ''
+  serviceConnection: ''
+  storageAccount: ''
+  containerName: ''
+  tfstateKey: ''
+
+jobs:
+- job: terraformplan
+  displayName: Terraform Plan Job
+  steps:
+    - task: TerraformTask@5
+      inputs:
+        provider: 'azurerm'
+        command: 'init'
+        workingDirectory: ${{ parameters.workingDir }}
+        backendServiceArm: ${{ parameters.serviceConnection }}
+        backendAzureRmStorageAccountName: ${{ parameters.storageAccount }}
+        backendAzureRmContainerName: ${{ parameters.containerName }}
+        backendAzureRmKey: ${{ parameters.tfstateKey }}
+
+    - task: TerraformTask@5
+      inputs:
+        provider: 'azurerm'
+        command: 'plan'
+        workingDirectory: ${{ parameters.workingDir }}
+        environmentServiceNameAzureRM: ${{ parameters.serviceConnection }}

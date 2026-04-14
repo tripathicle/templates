@@ -1,0 +1,12 @@
+parameters:
+  workingDir: ''
+
+jobs:
+- job: terraformvalidate
+  displayName: Terraform Validate Job
+  steps:
+    - task: TerraformTask@5
+      inputs:
+        provider: 'azurerm'
+        command: 'validate'
+        workingDirectory: ${{ parameters.workingDir }}

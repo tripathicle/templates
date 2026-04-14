@@ -1,13 +1,20 @@
+parameters:
+  workingDir: ''
+  serviceConnection: ''
+  storageAccount: ''
+  containerName: ''
+  tfstateKey: ''
+
 jobs:
-      - job: terraforminit
-        displayName: terraformjoninit
-        steps:
-          - task: TerraformTask@5
-            inputs:
-              provider: 'azurerm'
-              command: 'init'
-              workingDirectory: '$(System.DefaultWorkingDirectory)\Environment\Dev'
-              backendServiceArm: 'rakshak-svc'
-              backendAzureRmStorageAccountName: 'rakshakstg1'
-              backendAzureRmContainerName: 'tfstate'
-              backendAzureRmKey: 'dev.terraform.tfstate'
+- job: terraforminit
+  displayName: Terraform Init Job
+  steps:
+    - task: TerraformTask@5
+      inputs:
+        provider: 'azurerm'
+        command: 'init'
+        workingDirectory: ${{ parameters.workingDir }}
+        backendServiceArm: ${{ parameters.serviceConnection }}
+        backendAzureRmStorageAccountName: ${{ parameters.storageAccount }}
+        backendAzureRmContainerName: ${{ parameters.containerName }}
+        backendAzureRmKey: ${{ parameters.tfstateKey }}
