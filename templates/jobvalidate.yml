@@ -1,5 +1,9 @@
 parameters:
   workingDir: ''
+  serviceConnection: ''
+  storageAccount: ''
+  containerName: ''
+  tfstateKey: ''
 
 jobs:
 - job: terraformvalidate
@@ -11,6 +15,10 @@ jobs:
         provider: 'azurerm'
         command: 'init'
         workingDirectory: ${{ parameters.workingDir }}
+        backendServiceArm: ${{ parameters.serviceConnection }}
+        backendAzureRmStorageAccountName: ${{ parameters.storageAccount }}
+        backendAzureRmContainerName: ${{ parameters.containerName }}
+        backendAzureRmKey: ${{ parameters.tfstateKey }}
 
     - task: TerraformTask@5
       displayName: Terraform Validate
@@ -18,3 +26,73 @@ jobs:
         provider: 'azurerm'
         command: 'validate'
         workingDirectory: ${{ parameters.workingDir }}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# parameters:
+#   workingDir: ''
+
+# jobs:
+# - job: terraformvalidate
+#   displayName: Terraform Validate
+#   steps:
+#     - task: TerraformTask@5
+#       displayName: Terraform Init
+#       inputs:
+#         provider: 'azurerm'
+#         command: 'init'
+#         workingDirectory: ${{ parameters.workingDir }}
+
+#     - task: TerraformTask@5
+#       displayName: Terraform Validate
+#       inputs:
+#         provider: 'azurerm'
+#         command: 'validate'
+#         workingDirectory: ${{ parameters.workingDir }}
